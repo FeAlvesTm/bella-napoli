@@ -1,0 +1,241 @@
+.header-login {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0px 100px;
+  padding-bottom: 10px;
+  background-color: rgb(2, 3, 20);
+  border-bottom: 2px solid rgb(255, 255, 255);
+}
+
+.header-login .header-left {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-login {
+  width: 100px;
+  height: 100px;
+}
+
+.login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  min-height: calc(100vh - 120px);
+}
+
+.avatar-upload-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.avatar-label {
+  cursor: pointer;
+  display: inline-block;
+}
+
+#avatar-preview {
+  width: 140px;
+  height: 140px;
+  background: linear-gradient(135deg, rgb(218, 112, 23), rgb(255, 168, 62));
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  box-shadow: 0 10px 30px rgba(218, 112, 23, 0.3);
+}
+
+.avatar-text {
+  font-size: 14px;
+  color: var(--accent-orange);
+  margin-top: 5px;
+  text-shadow: 1px 1px 4px rgb(0, 0, 0);
+}
+
+#avatar-input {
+  display: none;
+}
+
+.login-container {
+  display: flex;
+  padding: 30px 60px;
+  gap: 50px;
+  max-width: 400px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 10px;
+  margin-bottom: 100px;
+  background:
+    linear-gradient(rgba(243, 239, 239, 0.568), rgba(209, 206, 206, 0.938)),
+    url('https://res.cloudinary.com/djgps6pjd/image/upload/v1770755110/background-login-img_bemy6r.png');
+}
+
+.login-container h2 {
+  margin-bottom: 0px;
+  color: black;
+}
+
+.login-form {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  flex-direction: column;
+}
+
+input {
+  border: none;
+  background: transparent;
+}
+
+input::placeholder {
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  opacity: 1;
+}
+
+.input-line {
+  display: flex;
+  align-items: center;
+  border-bottom: black 2px solid;
+  transition: all ease-in-out 0.3s;
+}
+
+.input-line:focus-within {
+  border-bottom-color: orange;
+  transform: scale(1.05);
+}
+
+.log-icon {
+}
+
+.user-input {
+  outline: none;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: 'plus jakarta sans';
+  background-color: transparent !important;
+}
+
+.user-input:-webkit-autofill,
+.user-input:-webkit-autofill:hover,
+.user-input:-webkit-autofill:focus,
+.user-input:-webkit-autofill:active {
+  -webkit-text-fill-color: #464646 !important;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.login-button {
+  padding: 10px 70px;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 18px;
+  color: rgb(0, 0, 0);
+  background: linear-gradient(135deg, rgb(235, 124, 33), rgb(247, 159, 53));
+  border: 2px solid rgb(228, 165, 30);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signup-text {
+  margin: 0px;
+  font-weight: 500;
+  color: black;
+}
+
+.signup-link {
+  margin: 0px;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: 'plus jakarta sans';
+  color: black;
+  transition: all ease-in-out 0.3s;
+}
+
+.signup-link:hover {
+  display: inline-block;
+  transform: scale(1.05);
+  background: linear-gradient(135deg, hsl(25 95% 53%), hsl(35 100% 60%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.signup-container {
+  display: flex;
+  padding: 30px 80px;
+  gap: 30px;
+  width: 100%;
+  max-width: 550px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 10px;
+  margin-bottom: 100px;
+  background:
+    linear-gradient(rgba(243, 239, 239, 0.568), rgba(209, 206, 206, 0.938)),
+    url('https://res.cloudinary.com/djgps6pjd/image/upload/v1770755110/background-login-img_bemy6r.png');
+  background-size: cover;
+}
+
+.alert-danger {
+  color: red;
+  background: #fee2e2;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ef4444;
+}
+
+.signup-container h2 {
+  margin-bottom: 5px;
+  color: black;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.signup-container .input-line {
+  width: 100%;
+}
+
+.signup-container .user-input {
+  width: 100%;
+}
+
+.signup-container .login-button {
+  margin-top: 10px;
+  width: auto;
+  min-width: 250px;
+}
+
+@media (max-width: 500px) {
+  .signup-container {
+    width: 50%;
+  }
+}

@@ -1,0 +1,126 @@
+extends layout
+
+block page-style
+  link(rel='stylesheet' href='/css/about.css')
+
+block content
+    section.about
+      .container-description-top
+        h1 
+          | Nossa 
+          span.primaria História
+        p.description Uma jornada de tradição, paixão e autenticidade que começou nas ruas de Nápoles e chegou até o seu coração através de cada fatia.
+
+   
+    section.index(style="margin-top: 50px;")
+      .container-description
+        h4.primaria DE NÁPOLES PARA O MUNDO
+        h2 A História da Bella Napoli
+        p.description A Bella Napoli nasceu do sonho de Giuseppe napole, um napolitano apaixonado pela arte de fazer pizzas. Em 1952, ele trouxe consigo não apenas receitas centenárias, mas toda a alma da culinária italiana.
+        p.description Cada pizza que servimos carrega décadas de tradição familiar, ingredientes selecionados diretamente da Itália e o amor genuíno pela gastronomia que nos define há mais de 70 anos.
+        a.btn-menu-about(href='/menu/pizzas') Conheça Nosso Menu
+ 
+      .container-img
+        img.about-main(src="https://res.cloudinary.com/djgps6pjd/image/upload/v1770755109/about-main_uweezg.png")
+
+    
+    section.timeline-section
+      .container-title-menu
+        h2.primaria NOSSA TRAJETÓRIA
+        h1 Marcos da Nossa História
+      
+      .timeline-container
+        .timeline-item
+          .timeline-title
+            span.primaria 1952
+            h3 O Início
+          .timeline-content
+            
+            p Giuseppe Rossi abre a primeira Bella Napoli em uma pequena rua do centro da cidade, trazendo receitas autênticas de sua família napolitana.
+        
+        .timeline-item
+          .timeline-title
+            span.primaria 1978
+            h3 Expansão
+          .timeline-content
+            p Com o sucesso crescente, abrimos nossa segunda unidade e começamos a ser reconhecidos como a melhor pizzaria italiana da região.
+        
+        .timeline-item
+          .timeline-title
+            span.primaria 1995
+            h3 Certificação
+          .timeline-content
+            p Recebemos a certificação da Associação Verace Pizza Napoletana, reconhecendo nossa autenticidade na preparação da pizza napolitana.
+        
+        .timeline-item
+          .timeline-title
+            span.primaria 2024
+            h3 Era Digital
+          .timeline-content
+            p Lançamos nossa plataforma digital mantendo a tradição, mas abraçando a modernidade para levar nossa pizza até você com ainda mais facilidade.
+
+   
+    section
+      .values-title-menu
+        h2.primaria NOSSOS VALORES
+        h1 O Que Nos Move
+      
+      .values-grid
+        .value-card
+          .value-icon 
+           i(data-lucide="heart")
+          h3.item-name Paixão
+          p.item-description Cada pizza é feita com amor e dedicação, mantendo viva a paixão pela culinária italiana que nos trouxe até aqui.
+        
+        .value-card
+          .value-icon
+           i(data-lucide="award")
+          h3.item-name Qualidade
+          p.item-description Ingredientes selecionados, receitas tradicionais e técnicas aperfeiçoadas ao longo de décadas garantem a excelência em cada mordida.
+        
+        .value-card
+          .value-icon 
+           i(data-lucide="users")
+          h3.item-name Família
+          p.item-description Tratamos cada cliente como parte da nossa família, criando momentos especiais ao redor da mesa com nossa autêntica hospitalidade italiana.
+
+
+    section
+      .container-title-menu
+        h2.primaria NOSSA EQUIPE
+        h1 Os Mestres da Bella Napoli
+      
+      .team-grid
+        
+
+        
+        .team-card
+          img.team-card-img(src="https://res.cloudinary.com/djgps6pjd/image/upload/v1770754498/Alessandro_Biaggi_r1mvep.png", alt="Chef Alessandro Biaggi")
+          .card-body
+            h3.item-name Chef Alessandro Biaggi
+            p.primaria Chef de Cuisine
+            p.about-card-description Especialista em gastronomia contemporânea pela Scuola Internazionale di Cucina Italiana. Alessandro é o responsável por integrar técnicas modernas de cocção e harmonizações ousadas ao menu, garantindo que cada prato seja uma ponte entre a Nápoles clássica e o paladar atual.
+        
+        .team-card
+          img.team-card-img(src="https://res.cloudinary.com/djgps6pjd/image/upload/v1770754498/Marco_Rossi_zlvhdw.png", alt="Chef Marco Rossi")
+          .card-body
+            h3.item-name Chef Marco Rossi
+            p.primaria Chef Executivo e Fundador
+            p.about-card-description Neto do fundador Giuseppe, Marco cresceu entre fornos e farinhas especiais. Dedicou décadas à pesquisa de ingredientes sazonais, elevando a herança da família Rossi ao patamar da alta gastronomia italiana, sem nunca perder a essência da verdadeira pizza napolitana.
+        
+        .team-card
+          img.team-card-img(src="https://res.cloudinary.com/djgps6pjd/image/upload/v1770754732/Antonio_Cavalli_ocbg0s.png", alt="Chef Antonio Cavalli")
+          .card-body
+            h3.item-name Chef Antonio Cavalli
+            p.primaria Maestro Pizzaiolo
+            p.about-card-description Mestre na arte da panificação e fermentação natural (Levain). Antonio supervisiona pessoalmente a maturação de 48 horas de nossas massas, garantindo a leveza, a elasticidade e a borda alveolada característica que define a excelência da nossa casa.
+
+    
+    section.about-footer
+      .container-description-footer
+        h1 
+          | Venha Fazer Parte da Nossa 
+          span.primaria História
+        p Cada cliente que entra pela nossa porta se torna parte da família Bella Napoli. Venha descobrir por que somos a pizzaria mais amada da cidade.
+        .cta-buttons
+         a.btn-order-now(href="/menu/pizzas") Faça Seu Pedido

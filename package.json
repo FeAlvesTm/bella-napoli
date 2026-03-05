@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "stripe:listen": "stripe listen --forward-to localhost:4000/webhook",
+    "server": "nodemon --watch src --watch db -e js,pug src/server.js",
+    "browser": "browser-sync start --config bs-config.cjs",
+    "dev": "concurrently \"npm run server\" \"npm run browser\" \"npm run stripe:listen\""
+  },
+  "author": "Felipe Alves",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.9.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.0.2",
+    "pg": "^8.17.2",
+    "prettier": "^3.8.0",
+    "pug": "^3.0.3",
+    "stripe": "^20.3.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.11"
+  }
+}

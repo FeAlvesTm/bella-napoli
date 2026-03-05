@@ -1,0 +1,186 @@
+extends adminBase 
+
+block specific-css
+  link(rel='stylesheet' href='/css/products.css')
+block append scripts
+  script(src='/js/products.js')
+
+block content
+    section.header-container
+      div.products-header
+        div.products-title
+          h1 Produtos
+          p Gerencie o cardápio da sua pizzaria
+        button.btn-add-product
+          i(data-lucide='plus')
+          | Novo Produto
+
+    section.filters-container    
+      div.search-products
+        i(data-lucide="search")
+        input#products-search-input(type="text" placeholder="Buscar produtos...")
+      div.filter-products.filter-wrapper
+        button.filter-dropdown-btn#btn-filter-toggle
+          i.icon-main(data-lucide="filter")
+          span#selected-category Filtrar por
+          i.icon-arrow(data-lucide="chevron-down")
+        ul.filter-dropdown-menu#filter-menu
+          li(data-value="all") Todas
+          li(data-value="pizzas") Pizzas
+          li(data-value="pasta") Massas
+          li(data-value="starters") Entradas
+          li(data-value="salads") Saladas
+          li(data-value="desserts") Sobremesas
+          li(data-value="drinks") Bebidas
+          li(data-value="ativado") Ativado
+          li(data-value="desativado") Desativado
+      div.products-display
+        p 
+          span#products-count #{products.length} 
+          |  produtos
+    
+    section.header-container
+      div.products-header
+        div.products-title
+          h1 Lista de Produtos
+          p Gerencie seus registros e acompanhe o desempenho em tempo real.
+
+    section.products-list
+      .orders-table
+        table
+          thead
+            tr
+              th Imagem
+              th Produto
+              th Categoria
+              th Preço
+              th Status
+              th Ações
+          tbody
+            if products && products.length > 0
+              each product in products
+                tr
+                  td: img.product-thumb(src=product.image_url || "/img/placeholder.png", alt=product.name)
+                  td
+                    .product-meta
+                      strong #{product.name}
+                      p #{product.description}
+                  td: span.category-text #{product.category}
+                  td: span.price-text R$ #{Number(product.price).toFixed(2).replace('.', ',')}
+                  td
+                   
+                    - const statusClass = product.status === 'ativado' ? 'ativado' : 'desativado'
+                    - const statusLabel = product.status === 'ativado' ? 'ativado' : 'desativado  '
+                    span.status-pill(class=statusClass) #{statusLabel}
+                  td
+                    .action-group
+                  
+                      button.btn-action.edit(title="Editar" data-id=product.id)
+                        i(data-lucide="pencil")
+                      button.btn-action.delete(title="Excluir" data-id=product.id)
+                        i(data-lucide="trash-2")
+            else
+              tr
+                td(colspan="6" style="text-align:center; padding: 30px; color: #777;") 
+                  p Nenhum produto cadastrado no momento. 🍕 
+
+    #product-modal.modal-overlay
+      .modal-content
+        .modal-header
+          h2 Cadastrar Novo Produto
+          button.close-modal#close-modal-btn &times;
+
+        .modal-body
+          form#product-form(enctype="multipart/form-data")
+            .form-group
+              label(for="name") Nome do Produto
+              input#name(type="text" name="name" required placeholder="Ex: Margherita Especial")
+            
+            .form-row
+              .form-group
+                label(for="category") Categoria
+                select#category(name="category" required)
+                  option(value="pizzas") Pizzas
+                  option(value="pasta") Massas
+                  option(value="starters") Entradas
+                  option(value="salads") Saladas
+                  option(value="desserts") Sobremesas
+                  option(value="drinks") Bebidas
+              
+              .form-group
+                label(for="price") Preço (R$)
+                input#price(type="number" name="price" step="0.01" required placeholder="0.00")
+
+              .form-group
+                label(for="status") Status Inicial
+                select#status(name="status" required)
+                  option(value="ativado") Ativado
+                  option(value="desativado") Desativado
+
+            .form-group
+              label(for="description") Descrição
+              textarea#description(name="description" rows="3" placeholder="Ingredientes e detalhes...")
+
+            .form-group.productImg-upload-container
+              label.productImg-upload-label(for="image")
+                i(data-lucide="camera") 
+                span#upload-label-text Foto do Produto
+           
+              input#image.hidden-input(type="file" name="image" accept="image/*" onchange="previewProductImage(this)")
+              #image-preview-name.file-name Nenhum arquivo selecionado
+
+        .modal-footer
+          button.btn-cancel#cancel-btn(type="button") Cancelar
+          button.btn-save(type="submit" form="product-form") Salvar Produto        
+
+    #edit-product-modal.modal-overlay
+      .modal-content
+        .modal-header
+          h2 Editar Produto
+          button.close-modal#close-edit-modal-btn &times;
+
+        .modal-body
+          form#edit-product-form(enctype="multipart/form-data")
+           
+            input#edit-id(type="hidden" name="id")
+            
+            .form-group
+              label(for="edit-name") Nome do Produto
+              input#edit-name(type="text" name="name" required)
+            
+            .form-row
+              .form-group
+                label(for="edit-category") Categoria
+                select#edit-category(name="category" required)
+                  option(value="pizzas") Pizzas
+                  option(value="pasta") Massas
+                  option(value="starters") Entradas
+                  option(value="salads") Saladas
+                  option(value="desserts") Sobremesas
+                  option(value="drinks") Bebidas
+
+              
+              .form-group
+                label(for="edit-price") Preço (R$)
+                input#edit-price(type="number" name="price" step="0.01" required)
+
+              .form-group
+                label(for="edit-status") Status
+                select#edit-status(name="status" required)
+                  option(value="ativado") Ativado
+                  option(value="desativado") Desativado
+
+            .form-group
+              label(for="edit-description") Descrição
+              textarea#edit-description(name="description" rows="3")
+
+            .form-group.productImg-upload-container
+              label.productImg-upload-label(for="edit-image")
+                i(data-lucide="camera") 
+                span Foto do Produto (Deixe vazio para manter a atual)
+              input#edit-image.hidden-input(type="file" name="image" accept="image/*")
+              #edit-image-preview-name.file-name 
+
+            .modal-footer
+              button.btn-cancel#cancel-edit-btn(type="button") Cancelar
+              button.btn-save(type="submit" form="edit-product-form") Atualizar Produto                                     

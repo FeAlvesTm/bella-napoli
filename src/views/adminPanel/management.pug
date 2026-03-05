@@ -1,0 +1,76 @@
+extends adminBase 
+
+block specific-css
+  link(rel='stylesheet' href='/css/management.css')
+
+block append scripts
+  script(src='/js/management.js')
+
+
+block content
+  section.management
+    div.management-header
+      div.managementTitle
+        h1 Gestão de pedidos
+
+      div.search-clients
+        i(data-lucide="search")
+        input#management-search-input(type="text" placeholder="Buscar clientes ou pedidos...")
+    div.orders-filter-btns
+      button.btn-filter(data-status='todos') 
+        i(data-lucide='list')
+        | Todos
+      button.btn-filter(data-status='pendente')  
+        i(data-lucide='clock')
+        | Pendente
+      button.btn-filter(data-status='preparando')  
+        i(data-lucide='utensils')
+        | Preparando
+      button.btn-filter(data-status='entregando')  
+        i(data-lucide='truck')
+        | Entregando   
+      button.btn-filter(data-status='concluido')  
+        i(data-lucide='check-circle')
+        | Concluido   
+      button.btn-filter(data-status='cancelado')  
+        i(data-lucide='x-circle')
+        | Cancelado
+
+  section.dashboard-orders 
+    .orders-header 
+      p Gerencie seus registros e acompanhe o desempenho em tempo real
+    .orders-table
+      table
+        thead
+          tr
+            th ID do Pedido
+            th Cliente
+            th Itens
+            th Horário
+            th Total
+            th Status
+        tbody
+          if managementData.recentOrders && managementData.recentOrders.length > 0
+            each order in managementData.recentOrders
+              tr
+           
+                td ORD-#{order.id}
+                
+                
+                td #{order.userName}
+                
+             
+                td #{order.itemsSummary}
+                
+              
+                td #{new Date(order.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                
+   
+                td R$ #{parseFloat(order.total_amount).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                
+            
+                td
+                  span.status-pill(class=order.status.toLowerCase()) #{order.status}
+          else
+            tr
+              td(colspan="6" style="text-align: center; padding: 20px;") Nenhum pedido encontrado hoje.

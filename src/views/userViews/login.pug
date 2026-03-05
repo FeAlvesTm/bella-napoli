@@ -1,0 +1,26 @@
+extends layout  
+
+block page-style
+  link(rel='stylesheet' href='/css/auth.css')
+
+
+block content 
+    section.login-section
+     div.login-container
+      h2 Login
+      if errorMessage
+        script.
+          alert("#{errorMessage}")
+      form.login-form(action="/auth/login" method="POST")
+       .input-line
+         input.user-input(type="email" placeholder="Email" name="email" required)
+         div.log-icon ✉️
+          i.fas.fa-user
+       .input-line
+         input.user-input(type="password" placeholder="Senha" name="password" required)
+         div.log-icon 🔒
+          i.fas.fa-user
+       button.login-button(type="submit") Entrar
+       p.signup-text
+        | Não tem uma conta? 
+        a.signup-link(href="/auth/signup") Cadastre-se

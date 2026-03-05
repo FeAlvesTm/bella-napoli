@@ -1,0 +1,113 @@
+extends adminBase 
+
+block specific-css
+  link(rel='stylesheet' href='/css/analytics.css')
+
+block content
+  section
+    div.analytics-title
+      h1 Análises e Relatórios
+      p Acompanhe o desempenho detalhado da sua pizzaria em tempo real.
+  section 
+    div.analytics-cards
+      div.analytics-card
+        div.card-content
+          p Faturamento Mensal
+          span R$ #{analyticsData.totalRevenue}       
+          span.card-value(class=analyticsData.revTrend >= 0 ? 'card-value-positive' : 'card-value-negative')
+            i(data-lucide=analyticsData.revTrend >= 0 ? 'trending-up' : 'trending-down') 
+            | #{analyticsData.revTrend >= 0 ? '+' : '-'}#{analyticsData.revTrend}% vs mês anterior
+        div.card-icon
+          i(data-lucide="dollar-sign") 
+      
+      div.analytics-card
+        div.card-content
+          p Total de Pedidos
+          span #{analyticsData.totalOrders}       
+          span.card-value(class=analyticsData.ordersTrend >= 0 ? 'card-value-positive' : 'card-value-negative')
+            i(data-lucide=analyticsData.ordersTrend >= 0 ? 'trending-up' : 'trending-down') 
+            | #{analyticsData.ordersTrend >= 0 ? '+' : '-'}#{analyticsData.ordersTrend}% vs mês anterior
+        div.card-icon
+          i(data-lucide="pizza")
+      
+      div.analytics-card
+        div.card-content
+          p Ticket Médio
+          span R$ #{analyticsData.averageTicket}     
+          span.card-value(class=analyticsData.ticketTrend >= 0 ? 'card-value-positive' : 'card-value-negative')
+            i(data-lucide=analyticsData.ticketTrend >= 0 ? 'trending-up' : 'trending-down') 
+            | #{analyticsData.ticketTrend >= 0 ? '+' : '-'}#{analyticsData.ticketTrend}% vs mês anterior
+        div.card-icon
+          i(data-lucide="credit-card")
+      
+      div.analytics-card
+        div.card-content
+          p Novos Clientes
+          span #{analyticsData.newCustomers}       
+          span.card-value(class=analyticsData.customersTrend >= 0 ? 'card-value-positive' : 'card-value-negative')
+            i(data-lucide=analyticsData.customersTrend >= 0 ? 'trending-up' : 'trending-down') 
+            | #{analyticsData.customersTrend >= 0 ? '+' : '-'}#{analyticsData.customersTrend}% vs mês anterior
+        div.card-icon
+          i(data-lucide="users")
+  section.analytics-overview
+    input#weekly-sales-data(type="hidden" value=analyticsData.weeklySales)
+    input#top-products-data(type="hidden" value=analyticsData.topProductsChart)
+    div.analytics-grid
+      div.chart-card
+        div.chart-label
+          div
+            h3 Tendência de Vendas Diárias
+            p Volume de vendas por hora e dia da semana.
+        .chart-wrapper 
+          canvas#salesBarChart
+      div.chart-card
+        div.chart-label
+          h3 Mix de Produtos
+          p Distribuição de vendas por categoria.
+        .chart-wrapper 
+          canvas#donutChart 
+        #chart-legend-container.mt-4 
+
+    div.charts-container-2
+      div.chart-card
+        div.chart-label
+          div
+            h3 Top Performance de Produtos
+        div.performance-products
+      
+          if analyticsData.topProducts && analyticsData.topProducts.length > 0
+            each product, index in analyticsData.topProducts
+              div.performance-product
+                div.performance-product-title
+                  span.product-position ##{index + 1}
+                  span.product-info
+                    h3 #{product.name}
+                    p.capitalize #{product.category}
+                div.product-stats 
+                  span R$ #{product.revenue}
+                  div(class=parseFloat(product.growth) >= 0 ? 'text-green-500' : 'text-red-500')
+                    i(data-lucide=parseFloat(product.growth) >= 0 ? "trending-up" : "trending-down") 
+                    p #{parseFloat(product.growth) >= 0 ? '+' : ''}#{product.growth}% crescimento
+            else
+              p.text-center.py-10 Sem vendas registradas no período.                    
+              
+         
+      div.chart-card.peak-hours-card
+        div.chart-label-header
+          div
+            h3 Horários de Pico
+            p Intensidade de pedidos por período (Últimos 28 dias).
+          i(data-lucide="clock")
+
+        div.heatmap-container
+        
+          each dia in ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
+            span.day-label #{dia}
+          
+     
+          if analyticsData.peakDays && analyticsData.peakDays.cells
+            each cell in analyticsData.peakDays.cells
+              div.heatmap-cell(
+                class=`level-${cell.level}`
+                title=`${cell.data} (${cell.diaNome}): ${cell.qtdTotal} pedidos`
+              )

@@ -1,0 +1,104 @@
+extends layout
+
+block page-style
+  link(rel='stylesheet' href='/css/menu.css')
+
+block append scripts
+  script(src='/js/menuCart.js')
+block content
+ 
+ #sidebar-cart.sidebar-cart
+    .cart-header
+      h2 Meu Pedido
+      button.close-cart &times;
+    .cart-body
+      #cart-items-list
+        p.empty-msg Seu carrinho está vazio 🍕
+    
+    .cart-footer
+    
+      .cart-delivery-info
+        .summary-line
+          span Subtotal
+          span#cart-subtotal R$ 0,00
+        .summary-line
+          span Taxa de Entrega
+          span#cart-delivery-fee R$ 0,00
+        
+       
+        #free-delivery-promo.free-delivery-badge.hidden
+          i(data-lucide="truck")
+          span#promo-text Faltam R$ 0,00 para Frete Grátis!
+
+      .cart-subtotal
+        span Total:
+        span#cart-total R$ 0,00
+      
+      button#btn-checkout.btn-checkout(type="button") Finalizar Pedido 
+
+ section.main-page
+  .container-description 
+    h1 
+     | Não é apenas uma pizza, é uma ótima 
+     span.primaria experiência!
+    p.description
+     | Descubra sabores únicos e ingredientes frescos na Pizzaria 
+     span.primaria Bella Napoli
+     | . Cada pizza é preparada com amor e dedicação para proporcionar momentos especiais.
+  
+    a.btn-pizza(href="#menu") Peça Agora!
+  .container-img 
+    img.main-container(src="https://res.cloudinary.com/djgps6pjd/image/upload/v1770755111/pizza-main-page_ouwubt.jpg" alt="Imagem da pizza da página inicial")
+ 
+ section.menu#menu
+  div.container-title-menu
+    span.primaria NOSSO MENU 
+    h1.menu-title Descubra Nosso Menu
+  
+
+  button#btn-open-categories.category-trigger-mobile
+    span 🍕 Selecionar Categoria
+    i(data-lucide="chevron-down")
+
+
+  div.menu-categories.primaria#categories-list.mobile-hidden
+    a.category-btn(href="/menu/pizzas", class=categoriaAtiva === 'pizzas' ? 'category-btn-active' : '') 
+      span.primaria.category-text Pizzas
+    a.category-btn(href="/menu/drinks", class=categoriaAtiva === 'drinks' ? 'category-btn-active' : '') 
+      span.primaria.category-text Bebidas
+    a.category-btn(href="/menu/desserts", class=categoriaAtiva === 'desserts' ? 'category-btn-active' : '') 
+      span.primaria.category-text Sobremesas
+    a.category-btn(href="/menu/starters", class=categoriaAtiva === 'starters' ? 'category-btn-active' : '') 
+      span.primaria.category-text Entradas
+    a.category-btn(href="/menu/pasta", class=categoriaAtiva === 'pasta' ? 'category-btn-active' : '') 
+      span.primaria.category-text Massas
+    a.category-btn(href="/menu/salads", class=categoriaAtiva === 'salads' ? 'category-btn-active' : '') 
+      span.primaria.category-text Saladas
+
+  div.menu-items-container
+
+    button.menu-prev-btn#prev-btn 
+      i(data-lucide="arrow-big-left-dash") 
+    
+    div.items-menu-wrapper
+      div.items-menu
+        each item in itemsToShow
+          .card
+            img.card-img(src=item.image_url, alt=item.name)
+            .card-body
+              h3.item-name #{item.name}
+              p.item-description= item.description
+              p.item-price.primaria #{item.price} R$
+              if user
+                button.btn-pizza.js-add-to-cart(
+                  data-id=item.id 
+                  data-name=item.name 
+                  data-price=item.price 
+                  data-image=item.image_url 
+                  data-desc=item.description
+                ) Adicionar ao carrinho
+              else
+                a.btn-login-required(href="/auth/login") Faça login para pedir
+    
+    button.menu-next-btn#next-btn 
+      i(data-lucide="arrow-big-right-dash")

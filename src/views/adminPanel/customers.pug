@@ -1,0 +1,88 @@
+extends adminBase 
+
+block specific-css
+  link(rel='stylesheet' href='/css/customers.css')
+block append scripts
+  script(src='/js/customers.js')
+block content
+
+  section
+    div.customers-title
+      h1 Gerenciamento de clientes
+      p Acompanhe o comportamento, fidelidade e histórico de compras da sua base de clientes.
+  section 
+  div.customers-cards
+    div.customers-card
+      div.card-icon
+        i(data-lucide="user") 
+      div.card-content
+        p BASE DE CLIENTES 
+        span #{stats.totalCustomers}   
+        span.customers-growth(class=stats.baseGrowth >= 0 ? 'customers-growth-positive' : 'customers-growth-negative') #{stats.baseGrowth > 0 ? '+' : '-'} #{Math.abs(stats.baseGrowth)}%
+    
+    div.customers-card
+      div.card-icon
+        i(data-lucide="shopping-bag") 
+      div.card-content
+        p PEDIDOS REALIZADOS 
+        span #{stats.totalOrders}        
+    
+    div.customers-card
+      div.card-icon
+        i(data-lucide="dollar-sign") 
+      div.card-content
+        p LTV MÉDIO (LIFETIME VALUE) 
+        span R$ #{stats.avgLtv}
+  section.customers-list
+    div.customers-list-header
+      div
+        h2 Lista de clientes 
+        p Gerencie seus registros e acompanhe o desempenho em tempo real.
+      div.customers-list-search-input
+        input(type="text")
+        span
+          i(data-lucide="search") 
+    div 
+      table.customers-list-table
+        thead
+          tr 
+            th Cliente 
+            th Telefone 
+            th Pedidos 
+            th Total Gasto 
+            th Último Pedido
+        tbody
+          if customers && customers.length > 0
+            each customer in customers
+              tr
+                td
+                  .client-cell
+                   
+                    img.client-avatar(src=customer.user_img_url || "/img/placeholder-user.png" alt="Foto")
+                    .client-data
+                      span.client-name #{customer.name}
+                      .sub-info
+                        i(data-lucide="mail")
+                        span #{customer.email}
+                td
+                  .cell-content
+                    i(data-lucide="phone")
+                    span #{customer.phone || 'Não informado'}
+                td
+                  .cell-content
+                    i(data-lucide="shopping-bag")
+                    span #{customer.total_orders || 0}
+                td
+          
+                  .cell-content.price-positive
+                    i(data-lucide="circle-dollar-sign")
+                    span R$ #{Number(customer.total_spent || 0).toFixed(2).replace('.', ',')}
+                td
+                  .cell-content
+                    i(data-lucide="calendar")
+                  
+                    span #{customer.last_order_date ? new Date(customer.last_order_date).toLocaleDateString('pt-BR') : '-'}
+          else
+            tr
+              td(colspan="5" style="text-align:center; padding: 20px; color: #888;") 
+                p Nenhum cliente encontrado. 🍕

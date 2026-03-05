@@ -1,0 +1,49 @@
+header(class=paginaAtual === 'login' ? 'header-login' : 'header-menu')
+
+  
+  .header-left
+    if paginaAtual === 'login'
+      a(href='/menu/pizzas')
+        img.logo-login(
+          src="https://res.cloudinary.com/djgps6pjd/image/upload/v1770755110/bella-napoli-logo_ldz3ib.png"
+          alt="Logo da Pizzaria Bella Napoli"
+        )
+    else
+      a(href='/menu')
+        img.logo(
+          src="https://res.cloudinary.com/djgps6pjd/image/upload/v1770755110/bella-napoli-logo_ldz3ib.png"
+          alt="Logo da Pizzaria Bella Napoli"
+        )
+
+
+  if paginaAtual !== 'login'
+      .header-center
+        nav 
+          ul.nav-links
+            if paginaAtual === 'about'
+              li: a(href="/menu") Início
+            else if paginaAtual === 'home'
+              li: a(href="/menu/pizzas") Menu
+              li: a(href="/user/about") Sobre Nós
+            else
+              li: a(href="/menu/pizzas") Menu
+            
+         
+            if user && (user.role === 'admin' || user.role === 'chef')
+              li: a(href="/adminPanel/storeConfig", class="avatar-text") adminPanel
+
+
+  if paginaAtual !== 'login'
+    .header-right
+      if user
+        a.shopping-cart-icon(href="javascript:void(0)" onclick="toggleCart()")
+          i(data-lucide="shopping-cart")
+          span#cart-badge 0  
+        a.user-profile(href="/user/perfil")
+          span.user-name Olá, #{user.name.split(' ')[0]}
+          .header-avatar-ring
+            img.header-avatar-img(src=user.user_img_url alt="Foto")
+      else
+        .auth-links
+          a.login-link(href="/auth/login") Entrar
+          a.btn-register(href="/auth/signup") Cadastrar-se

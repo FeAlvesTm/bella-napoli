@@ -1,0 +1,67 @@
+doctype html
+html
+  head
+    title Admin | #{title}
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/simple-icons-font@v16/font/simple-icons.min.css" type="text/css")
+    
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:wght@200;400;600&display=swap",
+    rel="stylesheet")
+    block specific-css
+    
+    link(rel='stylesheet' href='/css/adminLayout.css')
+
+    
+
+  body
+    .admin-wrapper
+      section.header 
+         p.header-title Pizzaria Bella Napoli - Painel Administrativo
+         .user-profile
+             img(src=user.user_img_url, alt='User', class='user-photo')
+             .user-info
+                 span.user-name #{user.name}
+                 span.user-role #{user.role}
+    
+      aside.sidebar
+        .sidebar-header
+          a(href='/menu/pizzas')
+             img(src='https://res.cloudinary.com/djgps6pjd/image/upload/v1770755110/bella-napoli-logo_ldz3ib.png', alt='Pizzaria Bella Napoli', class='sidebar-logo')
+        
+        h5 MENU PRINCIPAL
+
+        nav.sidebar-nav
+            a(href='/adminPanel/dashboard' class=page === 'dashboard' ? 'active' : '') 
+                i(data-lucide='layout-dashboard')
+                | Dashboard 
+            a(href='/adminPanel/management' class=page === 'management' ? 'active' : '') 
+                i(data-lucide='shopping-bag')
+                | Pedidos
+            a(href='/adminPanel/products' class=page === 'products' ? 'active' : '') 
+                i(data-lucide='pizza')
+                | Produtos
+            a(href='/adminPanel/customers' class=page === 'customers' ? 'active' : '') 
+                i(data-lucide='users-round')
+                | Clientes            
+            a(href='/adminPanel/analytics' class=page === 'analytics' ? 'active' : '') 
+                i(data-lucide='badge-dollar-sign')
+                | Análises
+            a(href='/adminPanel/storeConfig' class=page === 'storeConfig' ? 'active' : '') 
+                i(data-lucide='settings')
+                | Configurações
+            .spacer
+            a(href='/auth/user/logout') 
+                i(data-lucide='log-out')
+                | Sair
+
+
+      main.content-area
+        block content
+    script(src="https://unpkg.com/lucide@latest")
+    script.
+      lucide.createIcons();
+    script(src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js")  
+    script(type="module" src="/js/main.js")
+    block scripts     

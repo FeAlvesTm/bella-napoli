@@ -1,0 +1,397 @@
+extends adminBase 
+
+block specific-css
+  link(rel='stylesheet' href='/css/storeConfig.css')
+
+block append scripts
+  script(src='/js/storeConfig.js')
+
+block content
+  section
+    div.settings-header
+      div 
+        h1 Análises e Relatórios
+        p Acompanhe o desempenho detalhado da sua pizzaria em tempo real.
+      
+      button.btn-store-settings
+        i(data-lucide="save")
+        span Salvar Alterações  
+  
+  section.settings-section
+
+  .tabs-navigation
+    .tabs-list
+      
+      button.tab-btn.active(data-target="geral")
+        i(data-lucide="store")
+        span Geral
+      button.tab-btn(data-target="entrega")
+        i(data-lucide="truck")
+        span Entrega
+      button.tab-btn(data-target="seguranca")
+        i(data-lucide="shield-check")
+        span Segurança
+
+  .tabs-content-container
+    #geral.tab-panel.active
+      div.content-wrapper
+        .general-panel-header
+          h3 Dados da Unidade
+          p Informações públicas que aparecem no recibo e site.
+        
+        .panel-body
+          
+          .general-body-container
+            .general-form-group
+              label(for="store-name") Nome da Pizzaria
+              .input-wrapper
+                i(data-lucide="store")
+                input#store-name.form-input(type="text" name="store_name" value=storeConfig.store_name || "Bella Napoli Artisanal")
+            .general-form-group
+              label(for="cnpj") CNPJ
+              .input-wrapper
+                i(data-lucide="file-text")
+                input#cnpj.form-input(type="text" name="cnpj" value=storeConfig.cnpj || "12.345.678/0001-90")
+
+         
+          .general-body-container
+            .general-form-group
+              label(for="phone") Telefone de Contato
+              .input-wrapper
+                i(data-lucide="phone")
+                input#phone.form-input(type="text" name="phone" value=storeConfig.phone || "(11) 98765-4321")
+            .general-form-group
+              label(for="email") Email Comercial
+              .input-wrapper
+                i(data-lucide="mail")
+                input#email.form-input(type="text" name="email" value=storeConfig.email || "contato@bellanapoli.com")
+
+     
+          .general-body-container
+            .general-form-group
+              label(for="address") Endereço Completo
+              .input-wrapper
+                i(data-lucide="map-pin")
+                input#address.form-input(type="text" name="address" value=storeConfig.store_address || "Av. das Brasas, 123 - Centro, São Paulo - SP")
+
+      .content-wrapper
+        .general-panel-header
+          h3 Horários da Unidade
+          p Informações públicas que aparecem no recibo e site.
+
+        .opening-hours-row
+          span.day-name Segunda
+          
+          .controls-group
+         
+            .custom-select-wrapper
+              input(type="hidden" name="mon_start" value=storeConfig.mon_start || "18:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.mon_start || "18:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="18:00") 18:00
+                li(data-value="19:00") 19:00
+                li(data-value="20:00") 20:00
+
+            span.separator até
+
+           
+            .custom-select-wrapper
+              input(type="hidden" name="mon_end" value=storeConfig.mon_end || "23:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.mon_end || "23:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="22:00") 22:00
+                li(data-value="23:00") 23:00
+                li(data-value="00:00") 00:00
+
+            label.switch
+              input(type="checkbox" name="mon_switch" checked=storeConfig.mon_switch)
+              span.slider
+          
+        .opening-hours-row
+          span.day-name Terça
+          
+          .controls-group
+    
+            .custom-select-wrapper
+              input(type="hidden" name="tue_start" value=storeConfig.tue_start || "18:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.tue_start || "18:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="18:00") 18:00
+                li(data-value="19:00") 19:00
+                li(data-value="20:00") 20:00
+
+            span.separator até
+
+   
+            .custom-select-wrapper
+              input(type="hidden" name="tue_end" value=storeConfig.tue_end || "23:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.tue_end || "23:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="22:00") 22:00
+                li(data-value="23:00") 23:00
+                li(data-value="00:00") 00:00
+
+     
+            label.switch
+              input(type="checkbox" name="tue_switch" checked=storeConfig.tue_switch)
+              span.slider    
+                
+        .opening-hours-row
+          span.day-name Quarta
+          
+          .controls-group
+        
+            .custom-select-wrapper
+              input(type="hidden" name="wed_start" value=storeConfig.wed_start || "18:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.wed_start || "18:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="18:00") 18:00
+                li(data-value="19:00") 19:00
+                li(data-value="20:00") 20:00
+
+            span.separator até
+
+            
+            .custom-select-wrapper
+              input(type="hidden" name="wed_end" value=storeConfig.wed_end || "23:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.wed_end || "23:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="22:00") 22:00
+                li(data-value="23:00") 23:00
+                li(data-value="00:00") 00:00
+
+    
+            label.switch
+              input(type="checkbox" name="wed_switch" checked=storeConfig.wed_switch)
+              span.slider
+
+        .opening-hours-row
+          span.day-name Quinta
+          
+          .controls-group
+        
+            .custom-select-wrapper
+              input(type="hidden" name="thu_start" value=storeConfig.thu_start || "18:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.thu_start || "18:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="18:00") 18:00
+                li(data-value="19:00") 19:00
+                li(data-value="20:00") 20:00
+
+            span.separator até
+
+       
+            .custom-select-wrapper
+              input(type="hidden" name="thu_end" value=storeConfig.thu_end || "23:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.thu_end || "23:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="22:00") 22:00
+                li(data-value="23:00") 23:00
+                li(data-value="00:00") 00:00
+
+            label.switch
+              input(type="checkbox" name="thu_switch" checked=storeConfig.thu_switch)
+              span.slider
+
+        .opening-hours-row
+          span.day-name Sexta
+          
+          .controls-group
+        
+            .custom-select-wrapper
+              input(type="hidden" name="fri_start" value=storeConfig.fri_start || "18:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.fri_start || "18:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="18:00") 18:00
+                li(data-value="19:00") 19:00
+                li(data-value="20:00") 20:00
+
+            span.separator até
+
+           
+            .custom-select-wrapper
+              input(type="hidden" name="fri_end" value=storeConfig.fri_end || "23:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.fri_end || "23:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="22:00") 22:00
+                li(data-value="23:00") 23:00
+                li(data-value="00:00") 00:00
+
+      
+            label.switch
+              input(type="checkbox" name="fri_switch" checked=storeConfig.fri_switch)
+              span.slider
+
+        .opening-hours-row
+          span.day-name Sábado
+          
+          .controls-group
+          
+            .custom-select-wrapper
+              input(type="hidden" name="sat_start" value=storeConfig.sat_start || "18:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.sat_start || "18:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="18:00") 18:00
+                li(data-value="19:00") 19:00
+                li(data-value="20:00") 20:00
+
+            span.separator até
+
+            
+            .custom-select-wrapper
+              input(type="hidden" name="sat_end" value=storeConfig.sat_end || "23:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.sat_end || "23:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="22:00") 22:00
+                li(data-value="23:00") 23:00
+                li(data-value="00:00") 00:00
+
+          
+            label.switch
+              input(type="checkbox" name="sat_switch" checked=storeConfig.sat_switch)
+              span.slider 
+
+        .opening-hours-row
+          span.day-name Domingo
+          
+          .controls-group
+     
+            .custom-select-wrapper
+              input(type="hidden" name="sun_start" value=storeConfig.sun_start || "18:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.sun_start || "18:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="18:00") 18:00
+                li(data-value="19:00") 19:00
+                li(data-value="20:00") 20:00
+
+            span.separator até
+
+    
+            .custom-select-wrapper
+              input(type="hidden" name="sun_end" value=storeConfig.sun_end || "23:00")
+              button.select-trigger(type="button")
+                span #{storeConfig.sun_end || "23:00"}
+                i(data-lucide="chevron-down")
+              ul.select-options-list
+                li(data-value="22:00") 22:00
+                li(data-value="23:00") 23:00
+                li(data-value="00:00") 00:00
+
+   
+            label.switch
+              input(type="checkbox" name="sun_switch" checked=storeConfig.sun_switch)
+              span.slider                         
+
+   
+    #entrega.tab-panel
+      .content-wrapper
+        .panel-header
+          h3 Logística de Entrega
+          p Configure tempo da entrega e taxas de serviço.
+        
+        .panel-body
+     
+          .delivery-form-group.mb-8
+            .flex-between
+              label.stat-label Tempo Médio de Entrega
+              span.text-orange.font-mono #{storeConfig.delivery_time || 45} min
+            
+            .slider-container#delivery-slider
+              input(type="hidden" name="delivery_time" value=storeConfig.delivery_time || 45)
+              .slider-track
+                .slider-range(style=`width: ${((storeConfig.delivery_time || 45) / 120) * 100}%;`)
+              .slider-thumb(style=`left: ${((storeConfig.delivery_time || 45) / 120) * 100}%;`)
+
+         
+          .delivery-body-container
+            .delivery-form-group
+              label(for="min-order") Valor Mínimo do Pedido
+              .input-wrapper
+                span.input-prefix R$
+                input#min-order.form-input.pl-10(type="number" value=storeConfig.min_order_value || "45.00")
+            
+            .delivery-form-group
+              label(for="delivery-fee") Taxa de Entrega Base
+              .input-wrapper
+                span.input-prefix R$
+                input#delivery-fee.form-input.pl-10(type="number" name="delivery_fee" value=storeConfig.delivery_fee || "10.00")
+
+          .delivery-options
+            .delivery-option.flex-between
+              div
+                h3 Logística de Entrega
+                p Ativar frete grátis para pedidos acima de um valor.
+                .input-wrapper(style="margin-top: 10px;")
+                  span.input-prefix R$ 
+           
+                  input.form-input.pl-10(type="number" name="free_delivery_threshold" value=storeConfig.free_delivery_threshold || "100.00" step="0.01")
+              label.delivery-switch
+                input(type="checkbox" name="free_delivery_active" checked=storeConfig.free_delivery_active)
+                span.delivery-slider       
+  
+    #seguranca.tab-panel
+      .content-wrapper
+        .panel-header
+          h3 Métodos de Pagamento Aceitos
+          p Configure quais formas de pagamento estão disponíveis para os clientes.
+        
+        .panel-body
+          .payment-list
+       
+            .payment-row.flex-between
+              .payment-info
+                svg.lucide.lucide-credit-card(xmlns="http://www.w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #9ca3af;")
+                  rect(width="20" height="14" x="2" y="5" rx="2")
+                  line(x1="2" x2="22" y1="10" y2="10")
+                span Cartão de Crédito (Online)
+              label.delivery-switch
+                input(type="checkbox", name="pay_card" checked=storeConfig.pay_card)
+                span.delivery-slider
+
+          
+            .payment-row.flex-between
+              .payment-info
+                span.badge-pix PIX
+                span Pagamento via PIX
+              label.delivery-switch
+                input(type="checkbox", name="pay_pix" checked=storeConfig.pay_pix)
+                span.delivery-slider
+
+          
+            .payment-row.flex-between
+              .payment-info
+                svg.lucide.lucide-banknote(xmlns="http://www.w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #9ca3af;")
+                  rect(width="20" height="12" x="2" y="6" rx="2")
+                  circle(cx="12" cy="12" r="2")
+                  line(x1="6" x2="6" y1="12" y2="12")
+                  line(x1="18" x2="18" y1="12" y2="12")
+                span Dinheiro (Entrega)
+              label.delivery-switch
+                input(type="checkbox", name="pay_cash" checked=storeConfig.pay_cash)
+                span.delivery-slider    

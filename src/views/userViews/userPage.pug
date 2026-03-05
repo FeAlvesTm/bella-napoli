@@ -1,0 +1,148 @@
+extends layout
+
+block page-style
+  link(rel='stylesheet' href='/css/userPage.css')
+
+block append scripts
+  script(src='/js/menuCart.js')
+  script(src='/js/userProfile.js' type='module')
+  script(src='/js/userSlider.js' )
+
+block content
+  body.bg-main
+    #sidebar-cart.sidebar-cart
+      .cart-header
+        h2 Meu Pedido
+        button.close-cart &times;
+      .cart-body
+        #cart-items-list
+          p.empty-msg Seu carrinho está vazio 🍕
+      .cart-footer
+        .cart-subtotal
+          span Total:
+          span#cart-total R$ 0,00
+        button#btn-checkout.btn-checkout(type="button")  Finalizar Pedido 
+
+    main.view-container
+      header.user-hero
+        .avatar-ring
+          img.avatar-img(src=user.user_img_url alt="Foto")
+        h1.user-welcome Bem-vindo de volta, #[span.txt-gradient #{user.name.split(' ')[0]}]!
+        p.user-badge Cliente desde #{memberSince}
+
+      
+
+      section.insights-layout
+        .insight-box
+          i(data-lucide="pizza")
+          span.insight-label Pedidos
+          span.insight-data #{totalOrders}
+        .insight-box
+          i(data-lucide="heart")
+          span.insight-label Mais Pedido
+          span.insight-data #{favoritePizza}
+
+      footer.account-controls
+        button.btn-main.btn-edit-profile Editar Perfil e Endereço
+        a.btn-exit(href="/auth/logout")
+          i(data-lucide="log-out")
+          span Sair
+    
+      section.orders-history
+        header.orders-header
+          h2.section-title Meus Pedidos Recentes
+          .carousel-controls
+            button.btn-nav-order#prev-orders(type="button") 
+              i(data-lucide="chevron-left")
+            span#page-indicator.page-info 1 / 1
+            button.btn-nav-order#next-orders(type="button") 
+              i(data-lucide="chevron-right")
+
+        if orders && orders.length > 0
+          .orders-window
+            .orders-list.js-carousel-list
+              each order in orders
+                .order-card(data-id=order.id data-created=order.createdAt data-delivery-max=storeConfig.delivery_time)
+                  .order-info
+                    span.order-status(class=`status-${order.status.toLowerCase()}`) #{order.status.toUpperCase()}
+                    span.delivery-timer(data-max=configData.delivery_time) 🛵 Calculando tempo...
+                    span.order-number # #{order.id}
+                    span.order-date #{order.createdAt ? new Date(order.createdAt).toLocaleDateString('pt-BR') : 'Data Indisponível'}
+                  
+                  .order-details
+                    each item in order.OrderItems
+                      .order-product-item
+                        img(src=item.Product.image || 'https://via.placeholder.com')
+                        .order-product-desc
+                          span #{item.quantity}x #{item.Product.name}
+                          small Un: R$ #{Number(item.price_at_purchase).toFixed(2)}
+                  
+                  .order-total
+                    span Total: R$ #{Number(order.total_price).toFixed(2)}
+        else
+        
+          .empty-history
+            i(data-lucide="shopping-bag")
+            p Você ainda não fez nenhum pedido. Que tal uma pizza hoje?
+            a.btn-main-order-history(href="/menu/pizzas" ) Ver Cardápio
+
+              
+
+
+
+    #edit-profile-modal.modal-overlay
+      .modal-content
+        .modal-header
+          h3 Editar Perfil e Endereço
+          button.close-modal &times;
+        .modal-body
+          form#profile-form
+            h4 Dados Pessoais
+            .form-group
+              label(for="edit-name") Nome
+              input#edit-name(type="text" name="name" value=user.name required)
+            
+            .form-group
+              label(for="edit-email") Email
+              input#edit-email(type="email" name="email" value=user.email required)
+            
+            .form-group
+              label(for="edit-phone") Telefone
+              input#edit-phone(type="tel" name="phone" value=user.phone)
+            
+            hr.form-divider
+            h4 Endereço de Entrega
+            
+            .form-group
+              label(for="zip_code") CEP
+              input#zip_code(type="text" name="zipcode" value=user.zip_code maxlength="9" required)
+            
+            .form-group
+              label(for="street") Rua
+              input#street(type="text" name="street" value=user.street)
+            
+            .form-group
+              label(for="edit-number") Número
+              input#edit-number(type="text" name="number" value=user.number)
+            
+            .form-group
+              label(for="neighborhood") Bairro
+              input#neighborhood(type="text" name="neighborhood" value=user.neighborhood)
+            
+            .form-group
+              label(for="edit-complement") Complemento
+              input#edit-complement(type="text" name="complement" value=user.complement)
+
+            .form-group.avatar-upload-container
+              label.avatar-upload-label(for="edit-avatar")
+                i(data-lucide="camera") 
+                span Alterar Foto de Perfil
+              input#edit-avatar(type="file" name="avatar" accept="image/*" onchange="previewImage(this)")
+              #avatar-preview-name.file-name Nenhum arquivo selecionado 
+        
+        .modal-footer
+          button.btn-sec Cancelar
+          button.btn-main(type="submit" form="profile-form") Salvar Alterações
+
+    script.
+      lucide.createIcons();

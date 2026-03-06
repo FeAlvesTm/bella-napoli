@@ -134,38 +134,77 @@ export const CheckoutService = {
   },
 
   async handleWebhook(event) {
-    if (event.type !== 'checkout.session.completed') return;
+    console.log('Webhook recebido no Render!', {
+      type: event.type,
+      sessionId: event.data?.object?.id,
+      userId: event.data?.object?.metadata?.userId,
+      metadata: event.data?.object?.metadata,
+    });
+
+    if (event.type !== 'checkout.session.completed') {
+      console.log('Evento ignorado:', event.type);
+      return;
+    }
 
     const session = event.data.object;
-    const { userId, address, totalAmount, cartData } = session.metadata;
+    const { userId, address, totalAmount, cartData } = session.metadata || {};
+
+    console.log('Dados do metadata:', {
+      userId,
+      address,
+      totalAmount,
+      cartData,
+    });
+
+    if (!userId || !cartData) {
+      console.error('Metadata incompleto no webhook:', session.metadata);
+      return; // ou throw new AppError('Metadata inválido', 400);
+    }
+
     const itemsRaw = JSON.parse(cartData);
 
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
+      console.log('Transação iniciada para order do userId:', userId);
 
       const orderId = await Orders.create(client, userId, totalAmount, address);
+      console.log('Pedido criado com ID:', orderId);
 
       const productIds = itemsRaw.map((i) => i.id);
       const { rows: dbProds } = await client.query(
         'SELECT id, price FROM products WHERE id = ANY($1)',
         [productIds]
       );
+      console.log('Produtos encontrados no banco:', dbProds.length);
 
       const items = itemsRaw.map((item) => {
         const p = dbProds.find((db) => String(db.id) === String(item.id));
-        if (!p) throw new AppError('Produto inválido', 400);
+        if (!p) {
+          console.error('Produto não encontrado:', item.id);
+          throw new AppError('Produto inválido no carrinho', 400);
+        }
         return { id: item.id, price: p.price, quantity: item.q };
       });
 
       await Orders.addItems(client, orderId, items);
+      console.log('Itens adicionados ao pedido');
+
       await Orders.updateStatus(orderId, 'pendente');
+      console.log('Status atualizado para pendente');
 
       await client.query('COMMIT');
+      console.log('Transação COMMIT com sucesso');
+
       iniciarProgressoAutomatico(orderId);
     } catch (err) {
       await client.query('ROLLBACK');
-      throw err;
+      console.error('Erro no handleWebhook:', {
+        message: err.message,
+        stack: err.stack,
+        code: err.code,
+      });
+      throw err; // manda pro errorHandler
     } finally {
       client.release();
     }

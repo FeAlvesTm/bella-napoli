@@ -43,7 +43,9 @@ app.use(
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   })
 );
-
+app.get('/', (req, res) => {
+  res.redirect('/menu/pizzas');
+});
 app.use('/menu', menuRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);

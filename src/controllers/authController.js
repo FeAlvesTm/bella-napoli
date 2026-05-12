@@ -19,12 +19,12 @@ export const signup = async (req, res, next) => {
   } = req.body;
 
   try {
-    // 1. Verificar se o usuário já existe
-    const existingUser = await Users.findUserByEmail(email); // Certifique-se que esse método existe no seu Model
+   
+    const existingUser = await Users.findUserByEmail(email); 
     if (existingUser) {
       return res.status(400).render('userViews/signup', {
         errorMessage: 'Este e-mail já está em uso.',
-        oldData: req.body, // Para manter os campos preenchidos no formulário
+        oldData: req.body,
       });
     }
 
@@ -75,9 +75,9 @@ export const signup = async (req, res, next) => {
     res.redirect('/menu/pizzas');
   } catch (error) {
     console.error('Erro no signup:', error);
-    // Caso ocorra erro de banco de dados por email único (fallback)
+   
     if (error.code === '23505') {
-      // Código comum do Postgres para Unique Violation
+    
       return res.status(400).render('userViews/signup', {
         errorMessage: 'Este e-mail já está em uso.',
         oldData: req.body,
@@ -87,7 +87,7 @@ export const signup = async (req, res, next) => {
   }
 };
 
-// Ajuste na renderização inicial para evitar erros de variáveis undefined
+
 export const getSignupPage = (req, res) => {
   res.render('userViews/signup', { errorMessage: null, oldData: {} });
 };
